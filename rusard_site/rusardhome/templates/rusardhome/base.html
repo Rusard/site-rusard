@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rusard</title>
+    <script src="{% static 'rusardhome/myscript.js' %}"></script>
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+  </head>
+    <link rel="stylesheet" href="{% static 'rusardhome/style.css' %}">
+</head>
+<body>
+  <div class="topnav" id="myTopnav">
+    <a href="{% url 'home' %}"{% if 'home' in request.path %}class="active"{% endif %}>Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">3D 
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a href="{% url 'modelisation' %}"{% if '3D' in request.path %}class="active"{% endif %}>Modelisation</a>
+        <a href="#">Link 1</a>
+        <a href="#">Link 2</a>
+        <a href="#">Link 3</a>
+      </div>
+    </div>
+    <a href="#contact">Contact</a>
+    <a href="#about">About</a>
+    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+      <i class="fa-solid fa-bars"></i>
+    </a>
+  </div> 
+    {% block content %}{% endblock%}
+</body>
+</html>
