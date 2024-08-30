@@ -20,7 +20,7 @@ from rusardhome import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.accueil, name='accueil'),
+    path('Accueil/', views.accueil, name='accueil'),
     path('Modélisation/', views.modelisation, name='modelisation'),
     path('About/', views.about, name='about'),
     path('ProjetAPP/', views.projetapp, name='projetapp'),

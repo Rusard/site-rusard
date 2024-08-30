@@ -1,52 +1,99 @@
 {% extends 'rusardhome/base.html' %}
+{% load static %}
 {% block content %}
-<div class="main">
-    <title>Service de Modélisation 3D - Rusard_3D</title>
-
-    <h1>Transformez Vos Idées en Réalité avec Notre Service de Modélisation 3D</h1>
-
-    <p>Bienvenue chez Rusard_3D – Votre partenaire de confiance pour la modélisation 3D exceptionnelle et la concrétisation de vos concepts innovants!</p>
-
-    <h2>À Propos de Nous</h2>
-    <p>Chez Rusard_3D, nous sommes passionnés par la transformation des idées en réalité tangible. Spécialisés dans la modélisation de pièces en 3D, nous mettons à votre disposition notre expertise pour créer des fichiers STL, M3, et bien plus encore.</p>
-
-    <h2>Nos Services</h2>
-
-    <h3>Modélisation 3D</h3>
-    <p>Que vous ayez une idée claire ou simplement une esquisse sur un bout de papier, notre équipe expérimentée peut transformer vos concepts en modèles 3D prêts pour l'impression.</p>
-
-    <h3>Formats de Fichier</h3>
-    <p>Nous sommes flexibles en termes de formats de fichier. Que vous ayez besoin de fichiers STL, M3, ou d'autres formats spécifiques, nous nous adaptons à vos exigences.</p>
-
-    <h3>Impression 3D</h3>
-    <p>Dans le cadre de certains projets, nous offrons également des services d'impression 3D. Nous disposons des dernières technologies pour donner vie à vos modèles avec une précision exceptionnelle.</p>
-
-    <h2>Comment Ça Marche?</h2>
-
-    <h3>1. Consultation Gratuite</h3>
-    <p>Contactez-nous pour une consultation gratuite. Discutons de votre projet, de vos idées, et des spécifications requises.</p>
-
-    <h3>2. Précision du Plan</h3>
-    <p>Fournissez-nous un plan détaillé de la pièce que vous souhaitez modéliser. Plus les détails sont précis, plus nous pouvons répondre à vos attentes.</p>
-
-    <h3>3. Modélisation en Direct</h3>
-    <p>Si vous le souhaitez, nous pouvons effectuer la modélisation en direct, vous permettant de suivre le processus et d'apporter des ajustements en temps réel.</p>
-
-    <h3>4. Impression 3D (En Option)</h3>
-    <p>Sur demande, nous pouvons également imprimer la pièce modélisée pour vous. Profitez de notre service tout-en-un pour donner vie à vos projets.</p>
-
-    <h2>Pourquoi Nous Choisir?</h2>
-    <ul>
-        <li><strong>Expertise Technique:</strong> Notre équipe possède une vaste expérience dans la modélisation 3D.</li>
-        <li><strong>Flexibilité de Format:</strong> Nous nous adaptons à vos besoins en matière de formats de fichier.</li>
-        <li><strong>Service Personnalisé:</strong> Chaque projet est unique, et nous nous engageons à fournir un service personnalisé.</li>
+<div class="main bg-light">
+    <div class="container pt-5 bg-light">
+        <div class="d-flex justify-content-center m-2">
+            <h1 class="display-1 bg-primary bg-opacity-50 rounded p-2"><strong>Service de Modélisation 3D</strong></h1>
+        </div>
+    </div>
+    <div class="row pt-3 m-2 gy-3 justify-content-around">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">Transformez Vos Idées en Réalité</h2>
+              <p class="card-text">Bienvenue chez Rusard – Votre partenaire de confiance pour la modélisation 3D exceptionnelle et la concrétisation de vos concepts innovants! Je suis là pour vous accompagner à chaque étape.</p>
+              <a href="#" class="btn btn-primary">Page de contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h2 class="card-title">À Propos de Moi</h2>
+              <p class="card-text">Je suis passionné par la transformation des idées en réalité tangible. Spécialisé dans la modélisation de pièces en 3D, je mets à votre disposition mon expertise pour créer des fichiers STL, M3, et bien plus encore.</p>
+              <a href="#" class="btn btn-primary">Mes réalisation</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="d-flex  pt-5 justify-content-center">
+        <h2 class="display-1 bg-primary bg-opacity-50 rounded p-2"><strong>Mes Services</strong></h2>
+    </div>
+    <div class="row pt-3 m-2 gy-3 justify-content-between">
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Modélisation 3D</h3>
+                    <p class="card-text">Que vous ayez une idée claire, une pièces precise à reproduire ou simplement une esquisse sur un bout de papier, je peux transformer vos concepts en modèles 3D prêts pour l'impression.</p>
+                </div>
+                <img src="{% static 'rusardhome/media/imggéné.jpg' %}" class="card-img-top" alt="...">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Impression 3D</h3>
+                    <p class="card-text">Dans le cadre de certains projets, j'offre également des services d'impression 3D. Je dispose des dernières technologies pour donner vie à vos modèles avec une précision exceptionnelle.</p>
+                </div>
+                <img src="{% static 'rusardhome/media/imggéné.jpg' %}" class="card-img-top" alt="...">
+            </div>
+        </div>
+        <div class="col-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Formats de Fichier</h3>
+                    <p class="card-text">Je suis flexible en termes de formats de fichier. Que vous ayez besoin de fichiers STL, M3, ou d'autres formats spécifiques, je m'adapte à vos exigences.</p>
+                </div>
+                <img src="{% static 'rusardhome/media/imggéné.jpg' %}" class="card-img-top" alt="...">
+            </div>
+        </div>
+    </div>
+    <div class="d-flex pt-5 justify-content-center">
+        <h2 class="display-4 p-2 bg-primary bg-opacity-50 rounded"><strong>Comment Ça Marche?</strong></h2>
+    </div>
+    <div class="container py-3">
+        <div class="row">
+            <div class="col m-2 border border-primary">
+                <h3>Consultation Gratuite</h3>
+                <p>Contactez-moi pour une consultation gratuite. Discutons de votre projet, de vos idées, et des spécifications requises.</p>
+            </div>
+            <div class="col m-2 border border-primary">
+                <h3>Précision du Plan</h3>
+                <p>Fournissez-moi un plan détaillé de la pièce que vous souhaitez modéliser ou la prièce à reproduire. Plus les détails sont précis, plus je peux répondre à vos attentes.</p>
+            </div>
+            <div class="col m-2 border border-primary">
+                <h3>Modélisation en Direct</h3>
+                <p>Si vous le souhaitez, je peux effectuer la modélisation en direct, juste avec un live sur twitch ou youtube, vous permettant de suivre le processus et d'apporter des ajustements en temps réel.</p>
+            </div>
+            <div class="col m-2 border border-primary">
+                <h3>Impression 3D</h3>
+                <p>Sur demande, je peux également imprimer la pièce modélisée pour vous. Profitez de mon service tout-en-un pour donner vie à vos projets.</p>
+            </div>
+        </div>
+    </div>
+    <div class="contaner bg-primary text-light rounded p-5 text-center">
+    <h2>Pourquoi Me Choisir?</h2>
+    <ul class="d-flex-inline list-group-item">
+        <li class="list-group-item list-group-item-primary"><strong>Expertise Technique:</strong> Je possède une vaste expérience dans la modélisation 3D.</li>
+        <li class="list-group-item list-group-item-primary"><strong>Flexibilité de Format:</strong> Je m'adapte à vos besoins en matière de formats de fichier.</li>
+        <li class="list-group-item list-group-item-primary"><strong>Service Personnalisé:</strong> Chaque projet est unique, et je m'engage à fournir un service personnalisé.</li>
     </ul>
-
-    <p>Ne laissez pas vos idées rester sur le papier. Contactez-nous dès aujourd'hui pour transformer vos rêves en réalité avec Rusard_3D.</p>
-
-    <footer>
-        <p>[Coordonnées de Contact]</p>
-    </footer>
-</div>
+    <p class="fs-2"><strong>Ne laissez pas vos idées rester sur le papier.</strong></p>
+    <p class="fs-2"><strong> Contactez-moi dès aujourd'hui pour transformer vos rêves en réalité!</strong></p>
+    <a href="{% url 'contact' %}">
+        <button type="submit" class="btn btn-danger btn-lg">CONTACTEZ-MOI</button>
+    </a>
+    </div>
 {% endblock %}
 
