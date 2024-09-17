@@ -1,8 +1,17 @@
 {% extends 'rusardhome/base.html' %}
 {% block content %}
 
-<div>
-    <h1>HEEELLLLOOOOOOO</h1>
+<div class="main bg-light">
+    <div class="container py-5 bg-light">
+        <div class="d-fluid text-center p-2 bg-primary bg-opacity-50 rounded ">
+                <h1 class="display-1"><strong>Mes APP</strong></h1>
+            <p class="fs-2">Voici des app que j'ai faite. elle sont ici pour me rendre service mais ne sont pas destiné au grand publique.</p>
+        </div>
+    <div class="container p-5 bg-light text-center">
+        <a class=" p-2 border border-primary" href="{% url 'ts' %}"><strong>Recherche de Tours de service par n° de train</strong></a>
+
+</div>
+<div class="bg-primary rounded pt-5 text-center">
 </div>
 
 {% endblock %}

@@ -16,7 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from rusardhome import views
+import rusardhome.views as views
+import ts.views as ts_views
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +26,6 @@ urlpatterns = [
     path('Modélisation/', views.modelisation, name='modelisation'),
     path('About/', views.about, name='about'),
     path('ProjetAPP/', views.projetapp, name='projetapp'),
-    path('Contact/', views.contact, name='contact')
+    path('Contact/', views.contact, name='contact'),
+    path('ts-tpf/', ts_views.tours_services, name='ts'),
 ]
