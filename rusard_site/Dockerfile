@@ -4,6 +4,10 @@ FROM python:3.11
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 # Copier les fichiers de l'application
 COPY . /app/
 
