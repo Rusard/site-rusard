@@ -1,0 +1,66 @@
+###########
+# BUILDER #
+###########
+
+# Base image
+FROM python:3.11 as builder
+
+# Set work directory
+WORKDIR /usr/src/app
+
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends gcc && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
+RUN pip install --upgrade pip
+RUN pip install flake8==7.1.2
+COPY . /usr/src/app/
+RUN flake8 --ignore=E501,F401,E265,E131,E303,W391 .
+
+# Install dependencies
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+#########
+# FINAL #
+#########
+
+# Base image
+FROM python:3.11
+
+# Environment variables
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+
+# Create the app user before creating directories
+RUN addgroup --system app && adduser --system --group app
+
+# Create directories with correct permissions
+RUN mkdir -p $APP_HOME/staticfiles
+WORKDIR $APP_HOME
+
+# Install dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends netcat-openbsd && rm -rf /var/lib/apt/lists/*
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+# Copy entrypoint script
+COPY ./entrypoint.prod.sh .
+RUN sed -i 's/\r$//g' $APP_HOME/entrypoint.prod.sh
+RUN chmod +x $APP_HOME/entrypoint.prod.sh
+
+# Copy project files before changing user
+COPY . $APP_HOME
+RUN chown -R app:app $APP_HOME
+
+# Switch to non-root user
+USER app
+
+# Run entrypoint script
+ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
