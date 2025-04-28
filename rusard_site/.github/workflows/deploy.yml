@@ -3,7 +3,7 @@ name: Deploy Django to VPS
 on:
   push:
     branches:
-      - main  # Change si tu utilises une autre branche pour le déploiement
+      - master # Change si tu utilises une autre branche pour le déploiement
 
 jobs:
   deploy:
