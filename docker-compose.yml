@@ -1,11 +1,15 @@
 services:
   web:
-    build: .
+    build:
+      context: ./rusard_site
+      dockerfile: Dockerfile
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/app
+      - .:/rusard_site
     ports:
       - "8000:8000"
+    env_file:
+      - ./.env.dev
     environment:
       - DEBUG=1
       - SECRET_KEY=your_secret_key

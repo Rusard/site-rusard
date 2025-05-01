@@ -1,5 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect 
+from django.core.mail import send_mail
+from django.conf import settings
 
+def contactconfirme(request):
+    return render(request, 'rusardhome/contactconfirme.html')
 
 def accueil(request):
     return render(request, 'rusardhome/accueil.html')
@@ -18,4 +22,19 @@ def projetapp(request):
 
 
 def contact(request):
+    if request.method == 'POST':
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        message = request.POST.get('message')
+
+        full_message = f"Message de {name} ({email}):\n\n{message}"
+
+        send_mail(
+            subject="Nouveau message du formulaire",
+            message=full_message,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=["frederic.clerc.1990@gmail.com"],  # ← Ton adresse de réception
+        )
+
+        return redirect('contactconfirme')
     return render(request, 'rusardhome/contact.html')

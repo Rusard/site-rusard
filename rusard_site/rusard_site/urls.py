@@ -29,4 +29,6 @@ urlpatterns = [
     path('ProjetAPP/', views.projetapp, name='projetapp'),
     path('Contact/', views.contact, name='contact'),
     path('ts-tpf/', ts_views.tours_services, name='ts'),
+    path('Contact/Confirmation/', views.contactconfirme, name='contactconfirme'),
+
 ]
