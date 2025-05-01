@@ -6,6 +6,28 @@ on:
       - master # Change si tu utilises une autre branche pour le déploiement
 
 jobs:
+  lint:
+    name: Flake8 Lint Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Flake8
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+
+      - name: Run Flake8
+        run: flake8 . --ignore=E501,F401,E265,E131,E303,W391
+
+jobs:
   deploy:
     runs-on: ubuntu-latest
 
