@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect 
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 
+
 def contactconfirme(request):
     return render(request, 'rusardhome/contactconfirme.html')
+
 
 def accueil(request):
     return render(request, 'rusardhome/accueil.html')
