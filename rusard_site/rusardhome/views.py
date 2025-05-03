@@ -35,7 +35,7 @@ def contact(request):
             subject="Nouveau message du formulaire",
             message=full_message,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=["frederic.clerc.1990@gmail.com"],  # ← Ton adresse de réception
+            recipient_list=["contact@rusard.ch"],  # ← Ton adresse de réception
         )
 
         return redirect('contactconfirme')
