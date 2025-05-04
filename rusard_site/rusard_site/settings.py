@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
-import logging
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -148,10 +147,3 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")  # ← Ton adresse email
 EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")  # ← Mot de passe d'application sécurisé
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-
-# Configuration du logger pour le débogage SMTP
-logger = logging.getLogger('django')
-logger.setLevel(logging.DEBUG)
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.DEBUG)
-logger.addHandler(console_handler)
