@@ -31,7 +31,7 @@ def contact(request):
         honeypot = request.POST.get('website')
 
         full_message = f"Message de {name} ({email}):\n\n{message}"
-        
+
         if honeypot:
             full_message += "\n\n[⚠ BOT SUSPECTÉ : champ honeypot rempli]"
 
