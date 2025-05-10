@@ -28,8 +28,12 @@ def contact(request):
         name = request.POST.get('name')
         email = request.POST.get('email')
         message = request.POST.get('message')
+        honeypot = request.POST.get('website')
 
         full_message = f"Message de {name} ({email}):\n\n{message}"
+        
+        if honeypot:
+            full_message += "\n\n[⚠ BOT SUSPECTÉ : champ honeypot rempli]"
 
         send_mail(
             subject="Nouveau message du formulaire",
