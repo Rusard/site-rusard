@@ -13,8 +13,9 @@ services:
     env_file:
       - ./.env.prod
     environment:
-      - VIRTUAL_HOST=rusard.ch
-      - LETSENCRYPT_HOST=rusard.ch
+      - VIRTUAL_HOST=rusard.ch,www.rusard.ch
+      - VIRTUAL_PORT=8000
+      - LETSENCRYPT_HOST=rusard.ch,www.rusard.ch
       - LETSENCRYPT_EMAIL=contact@rusard.ch
     depends_on:
       - db
@@ -32,6 +33,9 @@ services:
     ports:
       - 443:443
       - 80:80
+    environment:
+      - ENABLE_DEFAULT_REDIRECT=true
+      - DEFAULT_HOST=rusard.ch
     volumes:
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
