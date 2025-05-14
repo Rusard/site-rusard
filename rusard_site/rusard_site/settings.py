@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
+import urllib.parse
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'rusard_site.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.environ.get("DATABASE_URL", "postgres://myuser:mypassword@db:5432/mydatabase")
+        default=f"postgres://{urllib.parse.quote(os.environ.get('SQL_USER', ''))}:{urllib.parse.quote(os.environ.get('SQL_PASSWORD', ''))}@{os.environ.get('SQL_HOST')}:{os.environ.get('SQL_PORT')}/{os.environ.get('SQL_DATABASE')}"
     )
 }
 
