@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'fontawesomefree',
     'rusardhome',
     'ts',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [

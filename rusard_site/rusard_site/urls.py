@@ -18,7 +18,14 @@ from django.contrib import admin
 from django.urls import path
 import rusardhome.views as views
 import ts.views as ts_views
+from django.contrib.sitemaps.views import sitemap
+from rusardhome.sitemaps import StaticViewSitemap, ArticleSitemap
 
+
+sitemaps = {
+    'static': StaticViewSitemap,
+    'articles': ArticleSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,5 +37,7 @@ urlpatterns = [
     path('Contact/', views.contact, name='contact'),
     path('ts-tpf/', ts_views.tours_services, name='ts'),
     path('Contact/Confirmation/', views.contactconfirme, name='contactconfirme'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+
 
 ]
