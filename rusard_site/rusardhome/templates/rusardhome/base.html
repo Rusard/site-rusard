@@ -71,19 +71,19 @@
               <div class="collapse navbar-collapse" id="menu">
                   <ul class="navbar-nav mx-auto">
                       <li class="nav-item">
-                          <a href="{% url 'accueil' %}" class="{% if 'Accueil' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Home</a>
+                          <a href="{% url 'accueil' %}" class="{% if request.resolver_match.url_name == 'accueil' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Home</a>
                       </li>
                       <li class="nav-item">
-                          <a href="{% url 'modelisation' %}" class="{% if 'Modélisation' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Modélisation 3D</a>
+                          <a href="{% url 'modelisation' %}" class="{% if request.resolver_match.url_name == 'modelisation' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Modélisation 3D</a>
                       </li>
                       <li class="nav-item">
-                          <a href="{% url 'contact' %}" class="{% if 'Contact' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Contact</a>
+                          <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Contact</a>
                       </li>
                       <li class="nav-item">
-                          <a href="{% url 'about' %}" class="{% if 'About' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">About</a>
+                          <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">About</a>
                       </li>
                       <li class="nav-item">
-                          <a href="{% url 'projetapp' %}" class="{% if 'ProjetAPP' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Projet APP</a>
+                          <a href="{% url 'projetapp' %}" class="{% if request.resolver_match.url_name == 'projetapp' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Projet APP</a>
                       </li>
                   </ul>
               </div>
@@ -127,21 +127,21 @@
               </button>
               <div class="collapse navbar-collapse" id="menu">
                   <ul class="navbar-nav mx-auto">
-                      <li class="nav-item">
-                          <a href="{% url 'accueil' %}" class="{% if 'Accueil' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Home</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="{% url 'modelisation' %}" class="{% if 'Modélisation' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Modélisation 3D</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="{% url 'contact' %}" class="{% if 'Contact' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Contact</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="{% url 'about' %}" class="{% if 'About' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">About</a>
-                      </li>
-                      <li class="nav-item">
-                          <a href="{% url 'projetapp' %}" class="{% if 'ProjetAPP' in request.path %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Projet APP</a>
-                      </li>
+                        <li class="nav-item">
+                            <a href="{% url 'accueil' %}" class="{% if request.resolver_match.url_name == 'accueil' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'modelisation' %}" class="{% if request.resolver_match.url_name == 'modelisation' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Modélisation 3D</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'projetapp' %}" class="{% if request.resolver_match.url_name == 'projetapp' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Projet APP</a>
+                        </li>
                   </ul>
               </div>
         </nav>
