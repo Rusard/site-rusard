@@ -10,6 +10,7 @@ Développer un site vitrine professionnel avec des fonctionnalités comme :
 * Formulaire de contact fonctionnel (via SMTP Infomaniak)
 * Interface d’administration Django
 * Intégration de Google Analytics
+* Connexion possible via Google, Facebook et Twitch
 * Structure prête pour ajouter une partie dynamique (ex. blog, e-commerce)
 
 ## 🪰 Stack technique
@@ -47,6 +48,16 @@ site-rusard/
    ```
 
 2. Créer un fichier `.env.dev` à partir de `.env.prod` avec tes variables de développement.
+   Ajoute-y aussi les identifiants OAuth pour Google, Facebook et Twitch :
+
+   ```env
+   SOCIAL_AUTH_GOOGLE_OAUTH2_KEY=<google-client-id>
+   SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET=<google-secret>
+   SOCIAL_AUTH_FACEBOOK_KEY=<facebook-app-id>
+   SOCIAL_AUTH_FACEBOOK_SECRET=<facebook-secret>
+   SOCIAL_AUTH_TWITCH_KEY=<twitch-client-id>
+   SOCIAL_AUTH_TWITCH_SECRET=<twitch-secret>
+   ```
 
 3. Lancer le projet :
 
@@ -80,7 +91,7 @@ Pour toute question ou suggestion :
 
 * Blog
 * e-commerce
-* compte pour se connecter
+* compte pour se connecter (via Google, Facebook et Twitch)
 
 ---
 

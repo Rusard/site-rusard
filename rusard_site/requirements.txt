@@ -10,3 +10,4 @@ psycopg2==2.9.10
 dj-database-url==2.3.0
 gunicorn==23.0.0
 flake8==7.1.2
+social-auth-app-django==5.4.3

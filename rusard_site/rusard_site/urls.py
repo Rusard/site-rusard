@@ -15,7 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 import rusardhome.views as views
 import ts.views as ts_views
 from django.contrib.sitemaps.views import sitemap
@@ -39,5 +40,8 @@ urlpatterns = [
     path('Contact/Confirmation/', views.contactconfirme, name='contactconfirme'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
+    path('auth/', include('social_django.urls', namespace='social')),
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
+    path('accounts/logout/', auth_views.LogoutView.as_view(), name='logout'),
 
 ]
