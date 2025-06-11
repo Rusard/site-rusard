@@ -10,7 +10,7 @@ Développer un site vitrine professionnel avec des fonctionnalités comme :
 * Formulaire de contact fonctionnel (via SMTP Infomaniak)
 * Interface d’administration Django
 * Intégration de Google Analytics
-* Connexion possible via Google, Facebook et Twitch
+* Connexion et inscription possibles via Google, Facebook et Twitch
 * Structure prête pour ajouter une partie dynamique (ex. blog, e-commerce)
 
 ## 🪰 Stack technique
@@ -91,7 +91,7 @@ Pour toute question ou suggestion :
 
 * Blog
 * e-commerce
-* compte pour se connecter (via Google, Facebook et Twitch)
+* compte pour se connecter/inscription (via Google, Facebook et Twitch)
 
 ---
 

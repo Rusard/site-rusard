@@ -1,15 +1,14 @@
 {% extends 'rusardhome/base.html' %}
 {% block content %}
 <div class="container py-5">
-  <h2>Connexion</h2>
+  <h2>Inscription</h2>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Connexion</button>
+    <button type="submit" class="btn btn-primary">Créer mon compte</button>
   </form>
-  <p class="mt-3">Pas encore de compte ? <a href="{% url 'signup' %}">Inscrivez-vous</a>.</p>
   <hr>
-  <p>Ou connectez-vous avec :</p>
+  <p>Ou inscrivez-vous avec :</p>
   <a class="btn btn-outline-danger" href="{% url 'social:begin' 'google-oauth2' %}">Google</a>
   <a class="btn btn-outline-primary" href="{% url 'social:begin' 'facebook' %}">Facebook</a>
   <a class="btn btn-outline-info" href="{% url 'social:begin' 'twitch' %}">Twitch</a>
