@@ -52,13 +52,19 @@
         </div>
 
         <div class="justify-content-end d-none d-sm-flex text-light">
-            <div class="justify-content-around">
+            <div class="justify-content-around align-items-center">
                 <a href="https://www.youtube.com/@Rusard_Yt" target="_blank" class="me-2 text-light" data-bs-toggle="tooltip" title="Youtube"><i class="bi bi-youtube"></i></a>
                 <a href="https://www.twitch.tv/rusard_/?sub_confirmation=1" class="me-2 text-light" target="_blank" data-bs-toggle="tooltip" title="Twitch"><i class="bi bi-twitch"></i></a>
                 <a href="https://discord.gg/9dXyjzkJ" class="me-2 text-light" target="_blank" data-bs-toggle="tooltip" title="Discord"><i class="bi bi-discord"></i></a>
                 <a href="https://www.facebook.com/RusradDIY/" class="me-2 text-light" target="_blank" data-bs-toggle="tooltip" title="Facebook"><i class="bi bi-facebook"></i></a>
                 <a href="https://www.instagram.com/rusard.diy/" class="me-2 text-light" target="_blank" data-bs-toggle="tooltip" title="Instagram"><i class="bi bi-instagram"></i></a>
                 <!--<a href="#" class="me-1 text-light" target="_blank" data-bs-toggle="tooltip" title="Twitter"><i class="bi bi-twitter"></i></a>-->
+                {% if request.user.is_authenticated %}
+                <small class="ms-3"><a href="{% url 'logout' %}" class="link-light">Déconnexion</a></small>
+                {% else %}
+                <small class="ms-3"><a href="{% url 'login' %}" class="link-light">Se connecter</a> /
+                    <a href="{% url 'signup' %}" class="link-light">S'inscrire</a></small>
+                {% endif %}
             </div>
         </div>
       </div>
