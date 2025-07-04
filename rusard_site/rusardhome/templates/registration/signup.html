@@ -1,0 +1,22 @@
+{% extends 'rusardhome/base.html' %}
+{% block content %}
+<div class="container py-5">
+  <h2 class="text-center mb-4">Inscription</h2>
+  <div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+      <form method="post" class="card card-body bg-light border-0">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary w-100">Créer mon compte</button>
+      </form>
+      <hr>
+      <p class="text-center">Ou inscrivez-vous avec :</p>
+      <div class="d-flex justify-content-between">
+        <a class="btn btn-outline-danger" href="{% url 'social:begin' 'google-oauth2' %}">Google</a>
+        <a class="btn btn-outline-primary" href="{% url 'social:begin' 'facebook' %}">Facebook</a>
+        <a class="btn btn-outline-info" href="{% url 'social:begin' 'twitch' %}">Twitch</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 
 def contactconfirme(request):
@@ -44,3 +46,16 @@ def contact(request):
 
         return redirect('contactconfirme')
     return render(request, 'rusardhome/contact.html')
+
+
+def signup(request):
+    """Register a new user with the default Django form."""
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('accueil')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {"form": form})
