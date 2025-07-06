@@ -38,6 +38,7 @@ urlpatterns = [
     path('Contact/', views.contact, name='contact'),
     path('ts-tpf/', ts_views.tours_services, name='ts'),
     path('Contact/Confirmation/', views.contactconfirme, name='contactconfirme'),
+    path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 
     path('auth/', include('social_django.urls', namespace='social')),
