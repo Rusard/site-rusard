@@ -3,6 +3,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from django.http import HttpResponse
+from django.urls import reverse
 
 
 def contactconfirme(request):
@@ -59,3 +61,13 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {"form": form})
+
+
+def robots_txt(request):
+    lines = [
+        "User-Agent: *",
+        "Disallow:",
+        f"Sitemap: {request.build_absolute_uri(reverse('django.contrib.sitemaps.views.sitemap'))}",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+

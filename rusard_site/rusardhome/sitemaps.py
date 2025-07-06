@@ -8,7 +8,15 @@ class StaticViewSitemap(Sitemap):
     changefreq = 'monthly'
 
     def items(self):
-        return ['accueil', 'modelisation', 'contact']  # noms des vues `name=` dans urls.py
+        return [
+            'accueil',
+            'modelisation',
+            'contact',
+            'about',
+            'projetapp',
+            'contactconfirme',
+            'ts',
+        ]  # noms des vues `name=` dans urls.py
 
     def location(self, item):
         return reverse(item)
