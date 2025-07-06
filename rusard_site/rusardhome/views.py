@@ -63,11 +63,4 @@ def signup(request):
     return render(request, 'registration/signup.html', {"form": form})
 
 
-def robots_txt(request):
-    lines = [
-        "User-Agent: *",
-        "Disallow:",
-        f"Sitemap: {request.build_absolute_uri(reverse('django.contrib.sitemaps.views.sitemap'))}",
-    ]
-    return HttpResponse("\n".join(lines), content_type="text/plain")
 
