@@ -21,6 +21,7 @@ import rusardhome.views as views
 import ts.views as ts_views
 from django.contrib.sitemaps.views import sitemap
 from rusardhome.sitemaps import StaticViewSitemap, ArticleSitemap
+from django.views.generic import TemplateView
 
 
 sitemaps = {
@@ -40,6 +41,7 @@ urlpatterns = [
     path('Contact/Confirmation/', views.contactconfirme, name='contactconfirme'),
     path('robots.txt', views.robots_txt, name='robots_txt'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
+    path('robots.txt', TemplateView.as_view(template_name='robots.txt', content_type='text/plain'), name='robots'),
 
     path('auth/', include('social_django.urls', namespace='social')),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),

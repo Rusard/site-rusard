@@ -5,7 +5,10 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rusard</title>
+    <title>{% block title %}Rusard{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Site de Rusard{% endblock %}">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
     
     <!-- Favicon standard -->
     <link rel="icon" type="image/png" sizes="96x96" href="{% static 'rusardhome/favicon/favicon-96x96.png' %}">
