@@ -48,6 +48,13 @@
     
 </head>
 <body class="bg-secondary-subtle">
+  {% if messages %}
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
   <div class="container">
     <header class="bg-primary rounded">
       <div class="py-4 container-fluid d-flex justify-content-between align-items-center border-bottom border-white">

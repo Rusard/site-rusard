@@ -42,6 +42,9 @@
                 </div>
               
                 <div class="col-12 my-2">
+                    <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
+                </div>
+                <div class="col-12 my-2">
                     <button type="submit" class="btn btn-primary w-100">Envoyer</button>
                 </div>
             </form>
@@ -51,4 +54,5 @@
     </div>
 
 </div>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 {% endblock %}
