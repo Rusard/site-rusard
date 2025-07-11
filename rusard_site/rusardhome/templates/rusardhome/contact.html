@@ -17,7 +17,7 @@
             <img class="img-fluid" src="{% static 'rusardhome/media/LOGO2022.png' %}" alt="">
         </div>
         <div class="col-6">
-            <form method="post" class="row px-4">
+            <form id="contact-form" method="post" class="row px-4">
                 {% csrf_token %}
                 <div class="col-6 my-2">
                     <label for="firstname" class="form-label">Prénom</label>
@@ -43,10 +43,10 @@
               
                 <div class="col-12 my-2">
                 <label for="recaptcha" class="form-label">Vérification</label>
-                    <button class="g-recaptcha" 
-                        data-sitekey="reCAPTCHA_site_key" 
-                        data-callback='onSubmit' 
-                        data-action='submit'>valide</button>
+                    <button class="g-recaptcha"
+                        data-sitekey="{{ recaptcha_site_key }}"
+                        data-callback='onSubmit'
+                        data-action='submit'>Valider</button>
                 </div>
                 <div class="col-12 my-2">
                     <button type="submit" class="btn btn-primary w-100">Envoyer</button>
@@ -58,18 +58,10 @@
     </div>
 
 </div>
-<script>
-  function onClick(e) {
-    e.preventDefault();
-    grecaptcha.enterprise.ready(async () => {
-      const token = await grecaptcha.enterprise.execute('6LcPG38rAAAAAEgGC4UjEA8ra_409ZNACsQ5ij_5', {action: 'LOGIN'});
-    });
-  }
-</script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
    function onSubmit(token) {
-     document.getElementById("demo-form").submit();
+     document.getElementById("contact-form").submit();
    }
 </script>
 
