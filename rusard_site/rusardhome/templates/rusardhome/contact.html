@@ -40,13 +40,10 @@
                     <label for="website">Ne pas remplir ce champ</label>
                     <input type="text" name="website" id="website">
                 </div>
-              
-                <div class="col-12 my-2">
-                    <button class="g-recaptcha"
-                        data-sitekey="{{ recaptcha_site_key }}"
-                        data-callback='onSubmit'>
-                    </button>
+                <!-- Google reCAPTCHA -->
+                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}" data-callback='onSubmit'>
                 </div>
+                <!-- Submit button -->
                 <div class="col-12 my-2">
                     <button type="submit" class="btn btn-primary w-100">Envoyer</button>
                 </div>
