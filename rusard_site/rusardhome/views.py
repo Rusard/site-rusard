@@ -36,6 +36,16 @@ def contact(request):
         message = request.POST.get('message')
         honeypot = request.POST.get('website')
 
+        # Vérification des champs obligatoires
+        if not name or not email or not message:
+            messages.error(request, "Tous les champs sont obligatoires.")
+            return render(request, 'rusardhome/contact.html', {
+                'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
+                'name': name,
+                'email': email,
+                'message': message
+            })
+
         recaptcha_response = request.POST.get('g-recaptcha-response')
         data = {
             'secret': settings.RECAPTCHA_PRIVATE_KEY,
@@ -43,10 +53,14 @@ def contact(request):
         }
         verify = requests.post('https://www.google.com/recaptcha/api/siteverify', data=data)
         result = verify.json()
-        if not result.get('success'):
-            messages.error(request, "Merci de valider le reCAPTCHA.")
+        # Vérification du score reCAPTCHA v3
+        if not result.get('success') or result.get('score', 0) < 0.5:
+            messages.error(request, "Échec du test reCAPTCHA. Veuillez réessayer.")
             return render(request, 'rusardhome/contact.html', {
-                'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY
+                'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
+                'name': name,
+                'email': email,
+                'message': message
             })
 
         full_message = f"Message de {name} ({email}):\n\n{message}"
@@ -63,7 +77,10 @@ def contact(request):
 
         return redirect('contactconfirme')
     return render(request, 'rusardhome/contact.html', {
-        'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY
+        'recaptcha_site_key': settings.RECAPTCHA_PUBLIC_KEY,
+        'name': '',
+        'email': '',
+        'message': ''
     })
 
 
@@ -78,6 +95,3 @@ def signup(request):
     else:
         form = UserCreationForm()
     return render(request, 'registration/signup.html', {"form": form})
-
-
-

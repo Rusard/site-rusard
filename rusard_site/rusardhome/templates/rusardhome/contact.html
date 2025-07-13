@@ -25,26 +25,24 @@
                 </div>
                 <div class="col-6 my-2">
                     <label for="name" class="form-label">Nom</label>
-                    <input name="name" type="text" class="form-control" id="name" required>
+                    <input name="name" type="text" class="form-control" id="name" required value="{{ name|default:'' }}">
                 </div>
                 <div class="col-12 my-2">
                     <label for="email" class="form-label">Email address</label>
-                    <input name="email" type="email" class="form-control" id="email" required>
+                    <input name="email" type="email" class="form-control" id="email" required value="{{ email|default:'' }}">
                 </div>
                 <div class="col-12 my-2">
                     <label for="message" class="form-label">Message</label>
-                    <textarea name="message" class="form-control" id="message" rows="3" required></textarea>
+                    <textarea name="message" class="form-control" id="message" rows="3" required>{{ message|default:'' }}</textarea>
                 </div>
                  <!-- Honeypot invisible -->
                 <div style="display:none;">
                     <label for="website">Ne pas remplir ce champ</label>
                     <input type="text" name="website" id="website">
                 </div>
-                <!-- Google reCAPTCHA -->
-                <div class="g-recaptcha" data-sitekey="{{ recaptcha_site_key }}"></div>
                 <!-- Submit button -->
                 <div class="col-12 my-2">
-                    <button type="submit" class="btn btn-primary w-100">Envoyer</button>
+                    <button type="button" class="btn btn-primary w-100" onclick="onClick()">Envoyer</button>
                 </div>
             </form>
 
@@ -53,11 +51,21 @@
     </div>
 
 </div>
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
 <script>
-   function onSubmit(token) {
-     document.getElementById("contact-form").submit();
-   }
+    function onClick() {
+        grecaptcha.ready(function () {
+            grecaptcha.execute('{{ recaptcha_site_key }}', { action: 'submit' }).then(function (token) {
+                var form = document.getElementById("contact-form");
+                var input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "g-recaptcha-response";
+                input.value = token;
+                form.appendChild(input);
+                form.submit();
+            });
+        });
+    }
 </script>
 
 {% endblock %}
