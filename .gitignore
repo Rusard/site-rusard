@@ -3,3 +3,5 @@ db.sqlite3
 .env.prod
 .env.prod.db
 .scp.txt
+__pycache__/
+*.pyc
