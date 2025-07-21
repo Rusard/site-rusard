@@ -67,6 +67,17 @@ site-rusard/
 
 4. Accéder au site sur [http://127.0.0.1:8000](http://127.0.0.1:8000)
 
+## 🧪 Tests
+
+Une petite suite de tests Pytest est fournie pour vérifier que le site se
+charge correctement. Pour l'exécuter localement :
+
+```bash
+pip install -r rusard_site/requirements.txt pytest pytest-django
+export SECRET_KEY=test DATABASE_URL=sqlite:///:memory:
+PYTHONPATH=$PWD/rusard_site:$PWD pytest
+```
+
 ## 🛠️ Déploiement automatique
 
 Le site est déployé automatiquement sur le serveur VPS à chaque `push` sur la branche `master` grâce à un workflow GitHub Actions.
