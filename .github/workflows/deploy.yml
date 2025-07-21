@@ -31,7 +31,7 @@ jobs:
       - name: Run tests
         env:
           SECRET_KEY: testsecret
-          DATABASE_URL: sqlite:///:memory:
+          DATABASE_URL: "sqlite:///:memory:"
           PYTHONPATH: "${{ github.workspace }}/rusard_site:${{ github.workspace }}"
         run: pytest -q
 
