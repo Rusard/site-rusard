@@ -10,4 +10,3 @@ os.environ.setdefault(
     "DJANGO_SETTINGS_MODULE",
     "rusard_site.rusard_site.settings",
 )
-
