@@ -1,0 +1,60 @@
+Report created: 
+	30/08/2022	09:06:21
+
+Project name: WBM-MoTemp-2682-COS-BrightLightLogoReveal_REVIEW_02.aep
+
+Source files collected to: 
+	C:\Users\coshea\AppData\Local\Temp\aegraphic\0ba123ac-5fc6-4f70-8fa5-533057181996\collectprj
+
+Source files collected: For target comp
+
+Collected comps:  
+	background_01
+	Title_01
+	Edit text here_01
+	Main animation_01
+	Media Group 01
+	Media 01
+	Noise
+	Media Group 02
+	motion_template
+	
+Number of collected files:  1
+
+Size of collected files:  29 KB
+
+Collected source files: 
+	E:\Ceara_working\1.AE_files\1_project files\1.Motion Graphics Templates\WBM-MoTemp-2682-COS-LightBeamLogoReveal\Footage\Logo_REPLACE 01.png
+	
+Rendering plug-ins:
+	Classic 3D
+	
+Effects used:  11
+
+Effect:  CC Radial Fast Blur
+	
+Effect:  Checkbox Control
+	
+Effect:  Color Control
+	
+Effect:  Fast Blur (Legacy)
+	
+Effect:  Fast Box Blur
+	
+Effect:  Fill
+	
+Effect:  Find Edges
+	
+Effect:  Fractal Noise
+	
+Effect:  Gradient Ramp
+	
+Effect:  Slider Control
+	
+Effect:  Vegas
+	
+
+Layer:  Text Layer
+	External dependencies:  
+		Font family: “Ministry”, Font style: “Bold”
+

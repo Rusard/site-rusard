@@ -5,3 +5,5 @@ db.sqlite3
 .scp.txt
 __pycache__/
 *.pyc
+.DS_Store
+
