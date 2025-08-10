@@ -1,0 +1,27 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -U pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          if [ -f requirements-dev.txt ]; then pip install -r requirements-dev.txt; fi
+          pip install black isort ruff pytest || true
+      - name: Format
+        run: bash scripts/format.sh
+      - name: Lint
+        run: bash scripts/lint.sh
+      - name: Tests
+        env:
+          DJANGO_SETTINGS_MODULE: rusard_site.settings
+        run: bash scripts/test.sh

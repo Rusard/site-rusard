@@ -8,15 +8,37 @@
 
 {% block content %}
     <div class="main bg-light">
-        <div class="container py-5 bg-light">
-            <div class="d-fluid text-center p-2 bg-primary bg-opacity-50 rounded ">
+        <div class="container pt-5 pe-5 ps-5 bg-light">
+            <!-- Hero Section
+                 - d-fluid: étend la largeur horizontalement comme un block (devrait être 'd-block' ou 'container-fluid' pour une sémantique plus précise)
+                 - text-center: centre le texte horizontalement
+                 - p-2: padding de 0.5rem sur tous les côtés
+                 - bg-primary: fond bleu Bootstrap
+                 - bg-opacity-50: opacité de fond à 50%
+                 - rounded: bords arrondis
+            -->
+            <div id="hero-section" class="d-fluid text-center p-2 bg-primary bg-opacity-50 rounded">
                     <h1 class="display-1"><strong>Découvrez Rusard.ch</strong></h1>
                 <p class="fs-2">Votre Source d'Inspiration Multidimensionnelle!</p>
                 <p>Bienvenue sur Rusard.ch, un lieu où la créativité rencontre la passion, et où chaque coin et recoin est une invitation à explorer une multitude d'univers fascinants.</p>
             </div>
         </div>
-        <div class="row p-5 m-2">
-            <div class="col-md-7">
+        <!-- Presentation Section
+             - row: ligne flex Bootstrap pour organiser des colonnes
+             - p-5: padding de 3rem sur tous les côtés
+             - m-2: marge de 0.5rem sur tous les côtés
+        -->
+        <div id="presentation-section" class="row p-3 m-2">
+            <!-- Texte de présentation
+                 - col-md-5: occupe 5 colonnes sur 12 à partir de l'écran md (≥768px)
+            -->
+            <div id="presentation-text" class="col-md-5">
+                <!-- 
+                     - border: ajoute une bordure autour de l'élément
+                     - border-primary: utilise la couleur principale (bleu)
+                     - p-2: padding de 0.5rem
+                     - mb-3: marge inférieure de 1rem
+                -->
                 <div class="border border-primary p-2 mb-3">
                     <h2><strong>Q'offre Rusard.ch?</strong></h2>
                     <p>Rusard.ch est bien plus qu'un simple site – c'est un voyage à travers mes passions et centres d'intérêt, et une invitation à vous joindre à moi dans cette aventure exceptionnelle.</p>
@@ -25,7 +47,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-7 p-2 border border-primary">
+            <!-- Liste des services
+                 - col-md-7: occupe 7 colonnes sur 12 à partir de md
+                 - p-2: padding interne
+                 - border border-primary: bordure bleue
+            -->
+            <div id="presentation-services" class="col-md-7 p-2 border border-primary">
                 <ul>
                     <li class="p-2"><h4><strong>Impression 3D:</strong></h4> Explorez le monde captivant de la modélisation 3D et de l'impression de pièces uniques qui prennent vie dans le monde réel.</li>
                     <li class="p-2"><h4><strong>Réparation et Fabrication:</strong></h4> Suivez mes projets de réparation et de création, où chaque objet cassé peut être réparer, améliorer ou aider à créer quelque chose de nouveau.</li>
@@ -38,7 +65,15 @@
                 </ul>
             </div>
         </div>
-        <div class="d-flex-inline bg-primary text-light rounded p-5 text-center">
+        <!-- Section de clôture
+             - d-flex-inline: (peut être une erreur, probablement voulu 'd-inline-flex' ou 'd-flex')
+             - bg-primary: fond bleu
+             - text-light: texte clair
+             - rounded: bords arrondis
+             - p-5: padding important (3rem)
+             - text-center: centre le texte
+        -->
+        <div id="closing-message" class="d-flex-inline bg-primary text-light rounded p-5 text-center">
             <h2><strong>Rusard.ch ?</strong></h2>
             <p>Rusard.ch est plus qu'une simple vitrine de passions. C'est un espace dynamique qui évolue au fil du temps, reflétant ma capacité à devenir touche-à-tout. Explorez, découvrez, et rejoignez-moi dans cette aventure multidimensionnelle! Créons ensemble une communauté de passionnés de découverte et d'entraide.</p>
         </div>

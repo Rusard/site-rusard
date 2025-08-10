@@ -1,0 +1,13 @@
+python_version: "3.11"
+project_name: "site-rusard"
+django_settings_module: "rusard_site.settings"
+manage_py: "manage.py"
+run_sequence:
+  - scripts/format.sh
+  - scripts/lint.sh
+  - scripts/test.sh
+commit_message_template: "chore(agent): {{title}}"
+exclude_paths:
+  - node_modules/
+  - logs/
+  - .git/
