@@ -40,9 +40,9 @@ urlpatterns = [
     path("Contact/", views.contact, name="contact"),
     path("ts-tpf/", ts_views.tours_services, name="ts"),
     path("Contact/Confirmation/", views.contactconfirme, name="contactconfirme"),
-    path("Mentions-legales/", views.mentions_legales, name="mentions_legales"),
+    path("Mentions_legales/", views.mentions_legales, name="mentions_legales"),
     path(
-        "Politique-de-confidentialite/",
+        "Politique_de_confidentialite/",
         views.politique_confidentialite,
         name="politique_confidentialite",
     ),
