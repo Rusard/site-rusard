@@ -1,86 +1,68 @@
+{% extends 'rusardhome/base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>APP Tours_de_services</title>
-    <meta name="description" content="Recherche de tours de service par numéro de train">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="{{ request.build_absolute_uri }}">
-    <!-- Open Graph -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.build_absolute_uri }}">
-    <meta property="og:title" content="APP Tours_de_services">
-    <meta property="og:description" content="Recherche de tours de service par numéro de train">
-    <meta property="og:image" content="{% static 'rusardhome/media/Logo-rusard-2024.png' %}">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Recherche de Tours de Service</h1>
-        <p>J'ai créé cette application dans le but de trouver plus rapidement le numero du tours qui fais un certain train. </p>
-        <p>Elle se base uniquement sur les consignes diponible dans Intera.</p>
-        <div class="container mt-2">
-            <form method="post">
-                {% csrf_token %}
-                
-                <!-- Numéro de train -->
-                <div class="form-group">
-                    <label for="train_number"><strong>Numéro de train :</strong></label>
-                    <input type="text" class="form-control" id="train_number" name="train_number" placeholder="Entrez le numéro de train" required>
-                </div>
-    
-                <!-- Boutons radio pour sélectionner la période -->
-                <div class="form-group">
-                    <label><strong>Période de roulement :</strong></label>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="period" id="period1" value="Lundi-Jeudi" required>
-                        <label class="form-check-label" for="period1">
-                            Lundi-Jeudi
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="period" id="period2" value="Vendredi" required>
-                        <label class="form-check-label" for="period2">
-                            Vendredi
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="period" id="period3" value="Samedi" required>
-                        <label class="form-check-label" for="period3">
-                            Samedi
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="period" id="period4" value="Dimanche" required>
-                        <label class="form-check-label" for="period4">
-                            Dimanche
-                        </label>
-                    </div>
-                </div>
-    
-                <!-- Bouton de soumission -->
+{% block title %}Tours de service - Rusard{% endblock %}
+{% block meta_description %}Recherche de tours de service par numéro de train{% endblock %}
+{% block og_title %}Tours de service - Rusard{% endblock %}
+{% block og_description %}Recherche de tours de service par numéro de train{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="display-5">Recherche de Tours de Service</h1>
+    <p>J'ai créé cette application dans le but de trouver plus rapidement le numéro du tour qui effectue un certain train.</p>
+    <p>Elle se base uniquement sur les consignes disponibles dans Intera.</p>
+    <div class="bg-light rounded p-4 shadow-sm">
+        <form method="post" class="row g-3">
+            {% csrf_token %}
+
+            <div class="col-md-6">
+                <label for="train_number" class="form-label"><strong>Numéro de train :</strong></label>
+                <input type="text" class="form-control" id="train_number" name="train_number" placeholder="Entrez le numéro de train" required value="{{ train_number }}">
+            </div>
+
+            <div class="col-md-6">
+                <fieldset>
+                    <legend class="fs-6"><strong>Période de roulement :</strong></legend>
+                    {% for value, label in period_choices %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="period" id="period-{{ forloop.counter }}" value="{{ value }}" required {% if period == value %}checked{% endif %}>
+                            <label class="form-check-label" for="period-{{ forloop.counter }}">{{ label }}</label>
+                        </div>
+                    {% endfor %}
+                </fieldset>
+            </div>
+
+            <div class="col-12">
                 <button type="submit" class="btn btn-primary">Soumettre</button>
-            </form>
-    
-            <!-- Zone d'affichage des résultats ou des erreurs -->
-            {% if result %}
-                <div class="alert alert-success mt-4">
-                    {{ result }}
-                </div>
-            {% elif error %}
-                <div class="alert alert-danger mt-4">
-                    {{ error }}
-                </div>
-            {% endif %}
-        </div>
+            </div>
+        </form>
+
+        {% if result %}
+            <div class="alert alert-success mt-4" role="status">
+                {{ result }}
+            </div>
+        {% elif error %}
+            <div class="alert alert-danger mt-4" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
     </div>
-    <script>
-        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-        const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-    </script>
-</body>
-</html>
+
+    {% if history %}
+        <div class="mt-4">
+            <h2 class="h4">Historique récent</h2>
+            <p class="text-muted">Les cinq dernières recherches réussies.</p>
+            <ul class="list-group">
+                {% for item in history %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <strong>Train {{ item.train_number }}</strong> — {{ item.period }}
+                        </span>
+                        <span class="badge bg-primary rounded-pill">{{ item.tour }}</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
