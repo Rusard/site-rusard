@@ -1,12 +1,16 @@
+import logging
+
 import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-from django.urls import reverse
+
+from .forms import ContactForm
+
+logger = logging.getLogger(__name__)
 
 
 def contactconfirme(request):
@@ -38,70 +42,87 @@ def politique_confidentialite(request):
 
 
 def contact(request):
+    form = ContactForm(request.POST or None)
+
     if request.method == "POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        message = request.POST.get("message")
-        honeypot = request.POST.get("website")
+        if not form.is_valid():
+            if form.errors.get("website"):
+                logger.info("Soumission bloquée par le honeypot anti-spam.")
+            messages.error(request, "Le formulaire contient des erreurs.")
+        else:
+            recaptcha_response = request.POST.get("g-recaptcha-response", "").strip()
+            if not recaptcha_response:
+                messages.error(
+                    request,
+                    "Le test reCAPTCHA n'a pas pu être validé. Veuillez réessayer.",
+                )
+            else:
+                data = {
+                    "secret": settings.RECAPTCHA_PRIVATE_KEY,
+                    "response": recaptcha_response,
+                }
+                try:
+                    verify = requests.post(
+                        "https://www.google.com/recaptcha/api/siteverify",
+                        data=data,
+                        timeout=5,
+                    )
+                    verify.raise_for_status()
+                    result = verify.json()
+                except requests.RequestException as exc:
+                    logger.warning("Échec de la vérification reCAPTCHA", exc_info=exc)
+                    messages.error(
+                        request,
+                        "Le service de vérification est momentanément indisponible. "
+                        "Veuillez réessayer plus tard.",
+                    )
+                except ValueError as exc:
+                    logger.warning("Réponse reCAPTCHA illisible", exc_info=exc)
+                    messages.error(
+                        request,
+                        "Une erreur est survenue avec la vérification. Veuillez réessayer.",
+                    )
+                else:
+                    if not result.get("success") or result.get("score", 0) < 0.5:
+                        logger.info(
+                            "Vérification reCAPTCHA refusée",
+                            extra={"score": result.get("score")},
+                        )
+                        messages.error(
+                            request,
+                            "Échec du test reCAPTCHA. Veuillez réessayer.",
+                        )
+                    else:
+                        cleaned = form.cleaned_data
+                        full_message = (
+                            f"Message de {cleaned['firstname']} {cleaned['name']} "
+                            f"({cleaned['email']}):\n\n{cleaned['message']}"
+                        )
 
-        # Vérification des champs obligatoires
-        if not name or not email or not message:
-            messages.error(request, "Tous les champs sont obligatoires.")
-            return render(
-                request,
-                "rusardhome/contact.html",
-                {
-                    "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY,
-                    "name": name,
-                    "email": email,
-                    "message": message,
-                },
-            )
+                        logger.info(
+                            "Envoi d'un message de contact réussi",
+                            extra={
+                                "firstname": cleaned["firstname"],
+                                "name": cleaned["name"],
+                                "email": cleaned["email"],
+                            },
+                        )
 
-        recaptcha_response = request.POST.get("g-recaptcha-response")
-        data = {
-            "secret": settings.RECAPTCHA_PRIVATE_KEY,
-            "response": recaptcha_response,
-        }
-        verify = requests.post(
-            "https://www.google.com/recaptcha/api/siteverify", data=data
-        )
-        result = verify.json()
-        # Vérification du score reCAPTCHA v3
-        if not result.get("success") or result.get("score", 0) < 0.5:
-            messages.error(request, "Échec du test reCAPTCHA. Veuillez réessayer.")
-            return render(
-                request,
-                "rusardhome/contact.html",
-                {
-                    "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY,
-                    "name": name,
-                    "email": email,
-                    "message": message,
-                },
-            )
+                        send_mail(
+                            subject="Nouveau message du formulaire",
+                            message=full_message,
+                            from_email=settings.DEFAULT_FROM_EMAIL,
+                            recipient_list=["contact@rusard.ch"],
+                        )
 
-        full_message = f"Message de {name} ({email}):\n\n{message}"
+                        return redirect("contactconfirme")
 
-        if honeypot:
-            full_message += "\n\n[⚠ BOT SUSPECTÉ : champ honeypot rempli]"
-
-        send_mail(
-            subject="Nouveau message du formulaire",
-            message=full_message,
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=["contact@rusard.ch"],  # ← Ton adresse de réception
-        )
-
-        return redirect("contactconfirme")
     return render(
         request,
         "rusardhome/contact.html",
         {
             "recaptcha_site_key": settings.RECAPTCHA_PUBLIC_KEY,
-            "name": "",
-            "email": "",
-            "message": "",
+            "form": form,
         },
     )
 
