@@ -6,63 +6,85 @@
 {% block og_title %}Contact - Rusard{% endblock %}
 {% block og_description %}Formulaire de contact pour joindre Rusard.{% endblock %}
 {% block content %}
-<div class="main bg-light">
-    <div class="container pt-5 bg-light">
-        <div class="d-flex justify-content-center m-2">
-            <h1 class="display-1 bg-primary bg-opacity-50 rounded p-2"><strong>Me Contacter</strong></h1>
+<div class="container">
+    <section class="rs-section rs-hero text-center text-lg-start">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <span class="rs-eyebrow">Restons en contact</span>
+                <h1 class="display-5 fw-bold mt-3">Parlons de vos idées et de vos projets</h1>
+                <p class="lead mt-3 mb-4">Expliquez-moi vos besoins, vos envies ou vos questions techniques. Je reviens vers vous rapidement avec des réponses concrètes.</p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img class="img-fluid rounded-4 shadow-lg" src="{% static 'rusardhome/media/Logo-rusard-2025-s.png' %}" alt="Logo Rusard">
+            </div>
         </div>
-    </div>
-    <div class="row py-5">
-        <div class="col-6">
-            <img class="img-fluid rounded p-2" src="{% static 'rusardhome/media/LOGO2022.png' %}" alt="">
+    </section>
+
+    <section class="rs-section">
+        <div class="row g-4 align-items-stretch">
+            <div class="col-12 col-lg-5">
+                <div class="rs-card rs-contact-card h-100 text-center text-lg-start">
+                    <h2 class="h3 fw-semibold">Un message suffit</h2>
+                    <p class="text-muted">Que ce soit pour une collaboration, un dépannage, une idée folle ou simplement pour dire bonjour, j'adore échanger avec la communauté.</p>
+                    <p class="fw-semibold mt-4 mb-2">Suivez-moi aussi en direct</p>
+                    <p class="text-muted small mb-3">Youtube · Twitch · Discord · Instagram</p>
+                    <div class="d-flex justify-content-center justify-content-lg-start gap-3 rs-social">
+                        <a href="https://www.youtube.com/@Rusard_Yt" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Youtube"><i class="bi bi-youtube"></i></a>
+                        <a href="https://www.twitch.tv/rusard_/?sub_confirmation=1" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Twitch"><i class="bi bi-twitch"></i></a>
+                        <a href="https://discord.gg/9dXyjzkJ" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Discord"><i class="bi bi-discord"></i></a>
+                        <a href="https://www.instagram.com/rusard.diy/" target="_blank" rel="noopener" data-bs-toggle="tooltip" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-7">
+                <div class="rs-card h-100">
+                    <form id="contact-form" method="post" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label for="{{ form.firstname.id_for_label }}" class="form-label">{{ form.firstname.label }}</label>
+                            {{ form.firstname }}
+                            {% if form.firstname.errors %}
+                                <div class="text-danger small mt-1">{{ form.firstname.errors|join:', ' }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
+                            {{ form.name }}
+                            {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors|join:', ' }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors|join:', ' }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-12">
+                            <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label }}</label>
+                            {{ form.message }}
+                            {% if form.message.errors %}
+                                <div class="text-danger small mt-1">{{ form.message.errors|join:', ' }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="d-none">
+                            <label for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>
+                            {{ form.website }}
+                        </div>
+                        <div class="col-12">
+                            <button type="button" class="btn btn-primary btn-lg w-100" onclick="onClick()">Envoyer</button>
+                        </div>
+                        <div class="col-12">
+                            <p class="small text-muted text-center mb-0">Vos informations sont utilisées uniquement pour répondre à votre message.</p>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="col-6">
-            <form id="contact-form" method="post" class="row px-4">
-                {% csrf_token %}
-                <div class="col-6 my-2">
-                    <label for="{{ form.firstname.id_for_label }}" class="form-label">{{ form.firstname.label }}</label>
-                    {{ form.firstname }}
-                    {% if form.firstname.errors %}
-                        <div class="text-danger small mt-1">{{ form.firstname.errors|join:', ' }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-6 my-2">
-                    <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
-                    {{ form.name }}
-                    {% if form.name.errors %}
-                        <div class="text-danger small mt-1">{{ form.name.errors|join:', ' }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-12 my-2">
-                    <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <div class="text-danger small mt-1">{{ form.email.errors|join:', ' }}</div>
-                    {% endif %}
-                </div>
-                <div class="col-12 my-2">
-                    <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label }}</label>
-                    {{ form.message }}
-                    {% if form.message.errors %}
-                        <div class="text-danger small mt-1">{{ form.message.errors|join:', ' }}</div>
-                    {% endif %}
-                </div>
-                <!-- Honeypot invisible -->
-                <div class="d-none">
-                    <label for="{{ form.website.id_for_label }}">{{ form.website.label }}</label>
-                    {{ form.website }}
-                </div>
-                <!-- Submit button -->
-                <div class="col-12 my-2">
-                    <button type="button" class="btn btn-primary w-100" onclick="onClick()">Envoyer</button>
-                </div>
-            </form>
-
-        </div>
-
-    </div>
-
+    </section>
 </div>
+{% endblock %}
 <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
 <script>
     function onClick() {
