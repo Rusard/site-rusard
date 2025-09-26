@@ -101,9 +101,9 @@
                       <li class="nav-item">
                           <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Contact</a>
                       </li>
-                      <li class="nav-item">
-                          <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Blog</a>
-                      </li>
+                        <li class="nav-item">
+                            <a href="{% url 'blog_list' %}" class="{% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'blog_detail' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Blog</a>
+                        </li>
                         <li class="nav-item">
                             <a href="{% url 'projetapp' %}" class="{% if request.resolver_match.url_name == 'projetapp' %}nav-link bg-primary-subtle rounded{% else %}nav-link text-light{% endif %}">Projet APP</a>
                         </li>
@@ -159,7 +159,7 @@
                             <a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Contact</a>
                         </li>
                         <li class="nav-item">
-                            <a href="{% url 'about' %}" class="{% if request.resolver_match.url_name == 'about' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Blog</a>
+                            <a href="{% url 'blog_list' %}" class="{% if request.resolver_match.url_name == 'blog_list' or request.resolver_match.url_name == 'blog_detail' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Blog</a>
                         </li>
                         <li class="nav-item">
                             <a href="{% url 'projetapp' %}" class="{% if request.resolver_match.url_name == 'projetapp' %}nav-link bg-primary-subtle rounded{% else %}nav-link{% endif %}">Projet APP</a>

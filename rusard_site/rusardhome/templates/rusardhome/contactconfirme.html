@@ -6,17 +6,18 @@
 {% block og_title %}Message envoyé - Rusard{% endblock %}
 {% block og_description %}Confirmation d'envoi du message de contact.{% endblock %}
 {% block content %}
-<div class="main bg-light">
-    <div class="container pt-5 bg-light">
-        <div class="d-flex justify-content-center m-2">
-            <h1 class="display-1 bg-primary bg-opacity-50 rounded p-2"><strong>Me Contacter</strong></h1>
+<div class="container">
+    <section class="rs-section text-center">
+        <span class="rs-eyebrow">Merci pour votre message</span>
+        <h1 class="display-5 fw-bold mt-3">Votre message est bien arrivé</h1>
+        <p class="lead text-muted mt-3">Je reviens rapidement vers vous avec une réponse personnalisée. En attendant, profitez-en pour explorer les projets et ressources disponibles sur le site.</p>
+        <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+            <a class="btn btn-primary px-4" href="{% url 'accueil' %}">Retour à l'accueil</a>
+            <a class="btn btn-outline-primary px-4" href="{% url 'modelisation' %}">Voir la modélisation 3D</a>
         </div>
-    </div>
-    <h1>Message envoyé</h1>
-    <div class="row py-5">
-        <div class="col-6">
-            <img class="img-fluid" src="{% static 'rusardhome/media/LOGO2022.png' %}" alt="">
+        <div class="mt-5">
+            <img class="img-fluid mx-auto d-block" style="max-width: 200px;" src="{% static 'rusardhome/media/Logo-rusard-2025-s.png' %}" alt="Logo Rusard">
         </div>
-    </div>
+    </section>
 </div>
 {% endblock %}

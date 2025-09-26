@@ -12,6 +12,7 @@ class StaticViewSitemap(Sitemap):
             'accueil',
             'modelisation',
             'contact',
+            'blog_list',
             'about',
             'projetapp',
             'contactconfirme',

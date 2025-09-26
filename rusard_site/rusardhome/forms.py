@@ -1,4 +1,8 @@
+"""Forms used across rusardhome views."""
+
 from django import forms
+
+from .models import Comment
 
 
 class ContactForm(forms.Form):
@@ -45,3 +49,25 @@ class ContactForm(forms.Form):
         if website:
             raise forms.ValidationError("Le formulaire n'a pas pu être envoyé.")
         return website
+
+
+class CommentForm(forms.ModelForm):
+    """Collect a visitor comment for a blog article."""
+
+    class Meta:
+        model = Comment
+        fields = ["author_name", "author_email", "body"]
+        labels = {
+            "author_name": "Nom",
+            "author_email": "Email (optionnel)",
+            "body": "Commentaire",
+        }
+        widgets = {
+            "body": forms.Textarea(attrs={"rows": 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            classes = field.widget.attrs.get("class", "")
+            field.widget.attrs["class"] = f"form-control {classes}".strip()

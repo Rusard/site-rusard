@@ -1,0 +1,46 @@
+{% extends 'rusardhome/base.html' %}
+
+{% block title %}Blog - Rusard{% endblock %}
+{% block meta_description %}Découvrez les derniers articles publiés par Rusard et rejoignez la discussion.{% endblock %}
+{% block og_title %}Blog - Rusard{% endblock %}
+{% block og_description %}Découvrez les derniers articles publiés par Rusard et rejoignez la discussion.{% endblock %}
+
+{% block content %}
+<div class="container bg-light py-5">
+    <div class="mb-5 text-center">
+        <h1 class="display-5">Le blog de Rusard</h1>
+        <p class="lead">Retrouvez ici les actualités, tutoriels et retours d'expérience partagés avec la communauté.</p>
+    </div>
+
+    {% if articles %}
+        <div class="row g-4">
+            {% for article in articles %}
+                <div class="col-lg-4 col-md-6">
+                    <article class="card h-100 shadow-sm border-0">
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="h4 mb-2">
+                                <a href="{{ article.get_absolute_url }}" class="text-decoration-none">{{ article.title }}</a>
+                            </h2>
+                            <p class="text-muted small mb-3">Publié le {{ article.created_at|date:"d F Y" }}</p>
+                            {% if article.excerpt %}
+                                <p class="card-text flex-grow-1">{{ article.excerpt }}</p>
+                            {% else %}
+                                <p class="card-text flex-grow-1">{{ article.content|truncatewords:30 }}</p>
+                            {% endif %}
+                            <div class="d-flex justify-content-between align-items-center pt-3 mt-auto border-top">
+                                <span class="text-muted"><i class="bi bi-chat-left-text"></i> {{ article.approved_comments_total }}</span>
+                                <span class="text-muted"><i class="bi bi-heart-fill"></i> {{ article.likes_total }}</span>
+                                <a href="{{ article.get_absolute_url }}" class="btn btn-primary btn-sm">Lire</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info" role="alert">
+            Aucun article n'est disponible pour le moment. Revenez bientôt !
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

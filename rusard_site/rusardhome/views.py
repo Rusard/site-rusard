@@ -4,11 +4,16 @@ import requests
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.core.mail import send_mail
-from django.shortcuts import redirect, render
+from django.db.models import Count, Prefetch, Q
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
+from django.views.decorators.http import require_POST
 
-from .forms import ContactForm
+from .forms import CommentForm, ContactForm
+from .models import Article, ArticleLike, Comment
 
 logger = logging.getLogger(__name__)
 
@@ -19,6 +24,101 @@ def contactconfirme(request):
 
 def accueil(request):
     return render(request, "rusardhome/accueil.html")
+
+
+def blog_list(request):
+    articles = (
+        Article.objects.all()
+        .annotate(
+            approved_comments_total=Count(
+                "comments",
+                filter=Q(comments__is_approved=True),
+            ),
+            likes_total=Count("likes", distinct=True),
+        )
+        .order_by("-created_at")
+    )
+    return render(
+        request,
+        "rusardhome/blog_list.html",
+        {
+            "articles": articles,
+        },
+    )
+
+
+def blog_detail(request, slug):
+    article = get_object_or_404(
+        Article.objects.prefetch_related(
+            Prefetch(
+                "comments",
+                queryset=Comment.objects.filter(is_approved=True).select_related("user"),
+            ),
+            "likes",
+        ),
+        slug=slug,
+    )
+    comments = article.comments.all()
+
+    user_display_name = ""
+    user_email = ""
+    if request.user.is_authenticated:
+        user_display_name = (
+            request.user.get_full_name() or request.user.get_username()
+        )
+        user_email = request.user.email
+
+    if request.method == "POST" and "comment_submit" in request.POST:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            if request.user.is_authenticated:
+                comment.user = request.user
+                comment.author_name = user_display_name
+                if user_email:
+                    comment.author_email = user_email
+            comment.article = article
+            comment.save()
+            messages.success(request, "Votre commentaire a bien été publié.")
+            return HttpResponseRedirect(f"{article.get_absolute_url()}#comments")
+    else:
+        initial = {}
+        if user_display_name:
+            initial["author_name"] = user_display_name
+        if user_email:
+            initial["author_email"] = user_email
+        form = CommentForm(initial=initial)
+
+    has_user_like = False
+    if request.user.is_authenticated:
+        has_user_like = article.likes.filter(user=request.user).exists()
+
+    return render(
+        request,
+        "rusardhome/blog_detail.html",
+        {
+            "article": article,
+            "comments": comments,
+            "comment_form": form,
+            "has_user_like": has_user_like,
+        },
+    )
+
+
+@login_required
+@require_POST
+def blog_toggle_like(request, slug):
+    article = get_object_or_404(Article, slug=slug)
+    like, created = ArticleLike.objects.get_or_create(
+        article=article,
+        user=request.user,
+    )
+    if created:
+        messages.success(request, "Merci pour votre j'aime !")
+    else:
+        like.delete()
+        messages.info(request, "Votre j'aime a été retiré.")
+    return HttpResponseRedirect(article.get_absolute_url())
 
 
 def modelisation(request):
