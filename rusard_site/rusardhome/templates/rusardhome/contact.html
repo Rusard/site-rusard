@@ -7,19 +7,7 @@
 {% block og_description %}Formulaire de contact pour joindre Rusard.{% endblock %}
 {% block content %}
 <div class="container">
-    <section class="rs-section rs-hero text-center text-lg-start">
-        <div class="row align-items-center g-4">
-            <div class="col-lg-6">
-                <span class="rs-eyebrow">Restons en contact</span>
-                <h1 class="display-5 fw-bold mt-3">Parlons de vos idées et de vos projets</h1>
-                <p class="lead mt-3 mb-4">Expliquez-moi vos besoins, vos envies ou vos questions techniques. Je reviens vers vous rapidement avec des réponses concrètes.</p>
-            </div>
-            <div class="col-lg-6 text-center">
-                <img class="img-fluid rounded-4 shadow-lg" src="{% static 'rusardhome/media/Logo-rusard-2025-s.png' %}" alt="Logo Rusard">
-            </div>
-        </div>
-    </section>
-
+    
     <section class="rs-section">
         <div class="row g-4 align-items-stretch">
             <div class="col-12 col-lg-5">
@@ -44,28 +32,28 @@
                             <label for="{{ form.firstname.id_for_label }}" class="form-label">{{ form.firstname.label }}</label>
                             {{ form.firstname }}
                             {% if form.firstname.errors %}
-                                <div class="text-danger small mt-1">{{ form.firstname.errors|join:', ' }}</div>
+                            <div class="text-danger small mt-1">{{ form.firstname.errors|join:', ' }}</div>
                             {% endif %}
                         </div>
                         <div class="col-md-6">
                             <label for="{{ form.name.id_for_label }}" class="form-label">{{ form.name.label }}</label>
                             {{ form.name }}
                             {% if form.name.errors %}
-                                <div class="text-danger small mt-1">{{ form.name.errors|join:', ' }}</div>
+                            <div class="text-danger small mt-1">{{ form.name.errors|join:', ' }}</div>
                             {% endif %}
                         </div>
                         <div class="col-12">
                             <label for="{{ form.email.id_for_label }}" class="form-label">{{ form.email.label }}</label>
                             {{ form.email }}
                             {% if form.email.errors %}
-                                <div class="text-danger small mt-1">{{ form.email.errors|join:', ' }}</div>
+                            <div class="text-danger small mt-1">{{ form.email.errors|join:', ' }}</div>
                             {% endif %}
                         </div>
                         <div class="col-12">
                             <label for="{{ form.message.id_for_label }}" class="form-label">{{ form.message.label }}</label>
                             {{ form.message }}
                             {% if form.message.errors %}
-                                <div class="text-danger small mt-1">{{ form.message.errors|join:', ' }}</div>
+                            <div class="text-danger small mt-1">{{ form.message.errors|join:', ' }}</div>
                             {% endif %}
                         </div>
                         <div class="d-none">
@@ -80,6 +68,18 @@
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+    </section>
+    <section class="rs-section rs-hero text-center text-lg-start">
+        <div class="row align-items-center g-4">
+            <div class="col-lg-6">
+                <span class="rs-eyebrow">Restons en contact</span>
+                <h1 class="display-5 fw-bold mt-3">Parlons de vos idées et de vos projets</h1>
+                <p class="lead mt-3 mb-4">Expliquez-moi vos besoins, vos envies ou vos questions techniques. Je reviens vers vous rapidement avec des réponses concrètes.</p>
+            </div>
+            <div class="col-lg-6 text-center">
+                <img class="img-fluid rounded-4 shadow-lg" src="{% static 'rusardhome/media/Logo-2025.png' %}" alt="Logo Rusard">
             </div>
         </div>
     </section>
