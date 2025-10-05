@@ -61,7 +61,7 @@ jobs:
 
       - name: Deploy via SSH
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} <<'EOF'
             set -e
             cd ~/site-rusard
             echo "📦 Déploiement basé sur les fichiers synchronisés."
@@ -87,4 +87,4 @@ jobs:
 
             echo "✅ Déploiement terminé avec succès."
             exit 0
-        EOF
+          EOF
