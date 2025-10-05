@@ -51,24 +51,36 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: Sync project files to server
+        run: |
+          rsync -az --delete \
+            --exclude '.git/' \
+            --exclude '.venv/' \
+            --exclude 'logs/' \
+            -e "ssh -o StrictHostKeyChecking=no" ./ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:~/site-rusard/
+
       - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
             set -e
             cd ~/site-rusard
-            echo "🔄 Reset et mise à jour du dépôt..."
-            git reset --hard HEAD
-            git pull origin master
+            echo "📦 Déploiement basé sur les fichiers synchronisés."
+
+            if command -v docker-compose >/dev/null 2>&1; then
+              COMPOSE_CMD="docker-compose"
+            else
+              COMPOSE_CMD="docker compose"
+            fi
 
             echo "🧱 Reconstruction et redéploiement Docker..."
-            docker-compose -f docker-compose.prod.yml down
-            docker-compose -f docker-compose.prod.yml up -d --build
+            $COMPOSE_CMD -f docker-compose.prod.yml down
+            $COMPOSE_CMD -f docker-compose.prod.yml up -d --build
 
             echo "⌛ Attente du démarrage du conteneur web..."
             sleep 10
 
             echo "📦 Collecte des fichiers statiques Django..."
-            docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput || echo "⚠️ collectstatic a renvoyé un code d'erreur, mais on continue."
+            $COMPOSE_CMD -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput || echo "⚠️ collectstatic a renvoyé un code d'erreur, mais on continue."
 
             echo "🧹 Nettoyage Docker..."
             docker system prune -af || true
