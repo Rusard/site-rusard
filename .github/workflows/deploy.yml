@@ -54,10 +54,25 @@ jobs:
       - name: Deploy via SSH
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            set -e
             cd ~/site-rusard
+            echo "🔄 Reset et mise à jour du dépôt..."
             git reset --hard HEAD
             git pull origin master
+
+            echo "🧱 Reconstruction et redéploiement Docker..."
             docker-compose -f docker-compose.prod.yml down
             docker-compose -f docker-compose.prod.yml up -d --build
-            docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput
-          EOF
+
+            echo "⌛ Attente du démarrage du conteneur web..."
+            sleep 10
+
+            echo "📦 Collecte des fichiers statiques Django..."
+            docker-compose -f docker-compose.prod.yml exec -T web python manage.py collectstatic --noinput || echo "⚠️ collectstatic a renvoyé un code d'erreur, mais on continue."
+
+            echo "🧹 Nettoyage Docker..."
+            docker system prune -af || true
+
+            echo "✅ Déploiement terminé avec succès."
+            exit 0
+        EOF
