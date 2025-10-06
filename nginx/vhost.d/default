@@ -1,13 +1,1 @@
-location /static/ {
-  alias /home/app/web/staticfiles/;
-  add_header Access-Control-Allow-Origin *;
-}
-
-location /media/ {
-  alias /home/app/web/mediafiles/;
-  add_header Access-Control-Allow-Origin *;
-}
-
-location / {
-  return 307 https://$host$request_uri;
-}
+add_header Access-Control-Allow-Origin * always;
