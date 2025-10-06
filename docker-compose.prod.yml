@@ -1,11 +1,11 @@
 services:
   web:
     build:
-      context: ./rusard_site
+      context: ./site-rusard
       dockerfile: Dockerfile.prod
-    command: gunicorn rusard_site.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn site-rusard.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./rusard_site:/home/app/web
+      - ./site-rusard:/home/app/web
       - static_volume:/home/app/web/staticfiles
       - media_volume:/home/app/web/mediafiles
     expose:
