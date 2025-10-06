@@ -53,7 +53,7 @@ jobs:
 
       - name: Sync project files to server
         run: |
-          rsync -az --delete \
+          rsync -az \
             --exclude '.git/' \
             --exclude '.venv/' \
             --exclude 'logs/' \
