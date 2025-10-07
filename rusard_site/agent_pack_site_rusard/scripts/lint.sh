@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-ruff check . || true
+ruff check .
 python -m compileall -q .

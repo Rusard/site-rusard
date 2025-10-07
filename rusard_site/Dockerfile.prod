@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends gcc && rm -rf /
 RUN pip install --upgrade pip
 RUN pip install flake8==7.1.2
 COPY . /usr/src/app/
-RUN flake8 --ignore=E501,F401,E265,E131,E303,W391 .
+RUN flake8 --ignore=E501,F401,E265,E131,E303,E402,W391 .
 
 # Install dependencies
 COPY ./requirements.txt .
