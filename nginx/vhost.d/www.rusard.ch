@@ -1,7 +1,1 @@
-location /static/ {
-    alias /home/app/web/staticfiles/;
-}
-
-location /media/ {
-    alias /home/app/web/mediafiles/;
-}
+return 301 https://rusard.ch$request_uri;
