@@ -1,0 +1,16 @@
+## 2025-03-17 — Ajustements config agent
+
+### Contexte
+- Correction du template de message de commit dans `rusard_site/agent_pack_site_rusard/config.yaml` pour suivre les directives AGENTS.
+- Exécution des scripts standard : format, lint, tests.
+
+### Commandes
+1. `rusard_site/agent_pack_site_rusard/scripts/format.sh`
+2. `rusard_site/agent_pack_site_rusard/scripts/lint.sh`
+3. `rusard_site/agent_pack_site_rusard/scripts/test.sh` (échoue sans `manage.py` à la racine)
+4. `(cd rusard_site && ../rusard_site/agent_pack_site_rusard/scripts/test.sh)` (échoue faute de configuration base de données)
+
+### Résultat
+- Formatage appliqué automatiquement sur plusieurs fichiers Python.
+- Lint OK.
+- Tests Django bloqués par l'absence de configuration BDD locale (`ValueError: Port could not be cast to integer value as 'None'`).

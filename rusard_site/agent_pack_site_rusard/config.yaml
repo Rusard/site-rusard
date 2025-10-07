@@ -6,7 +6,7 @@ run_sequence:
   - scripts/format.sh
   - scripts/lint.sh
   - scripts/test.sh
-commit_message_template: "chore(agent): {{title}}"
+commit_message_template: "chore(agent): {title}"
 exclude_paths:
   - node_modules/
   - logs/
