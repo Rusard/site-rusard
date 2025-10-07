@@ -13,7 +13,7 @@ services:
     env_file:
       - ./.env.prod
     environment:
-      - VIRTUAL_HOST=rusard.ch,www.rusard.ch
+      - VIRTUAL_HOST=rusard.ch
       - VIRTUAL_PORT=8000
       - LETSENCRYPT_HOST=rusard.ch,www.rusard.ch
       - LETSENCRYPT_EMAIL=contact@rusard.ch
