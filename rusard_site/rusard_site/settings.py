@@ -41,6 +41,41 @@ def parse_env_list(variable_name: str) -> list[str]:
 
 ALLOWED_HOSTS = parse_env_list("DJANGO_ALLOWED_HOSTS")
 
+
+REQUIRED_SETTINGS_PLACEHOLDERS: dict[str, str] = {
+    "EMAIL_HOST_USER": "dev@example.com",
+    "EMAIL_HOST_PASSWORD": "devpassword",
+    "RECAPTCHA_PUBLIC_KEY": "dev-recaptcha-public-key",
+    "RECAPTCHA_PRIVATE_KEY": "dev-recaptcha-private-key",
+}
+
+
+def get_env_setting(name: str, default: str) -> str:
+    value = os.environ.get(name)
+    if value:
+        return value
+    return default
+
+
+def build_default_database_url() -> str:
+    """Return a Postgres connection URL populated with safe default values."""
+
+    default_user = get_env_setting("SQL_USER", "postgres")
+    default_password = get_env_setting("SQL_PASSWORD", "postgres")
+    default_host = get_env_setting("SQL_HOST", "localhost")
+    default_port = get_env_setting("SQL_PORT", "5432")
+    default_db = get_env_setting("SQL_DATABASE", "postgres")
+
+    return (
+        "postgres://"
+        f"{urllib.parse.quote(default_user)}:"
+        f"{urllib.parse.quote(default_password)}@"
+        f"{default_host}:"
+        f"{default_port}/"
+        f"{default_db}"
+    )
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -101,11 +136,7 @@ WSGI_APPLICATION = "rusard_site.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"postgres://{urllib.parse.quote(os.environ.get('SQL_USER', ''))}:{urllib.parse.quote(os.environ.get('SQL_PASSWORD', ''))}@{os.environ.get('SQL_HOST')}:{os.environ.get('SQL_PORT')}/{os.environ.get('SQL_DATABASE')}"
-    )
-}
+DATABASES = {"default": dj_database_url.config(default=build_default_database_url())}
 
 
 # Password validation
@@ -164,9 +195,12 @@ EMAIL_HOST = "mail.infomaniak.com"
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")  # ← Ton adresse email
-EMAIL_HOST_PASSWORD = os.environ.get(
-    "EMAIL_HOST_PASSWORD"
+EMAIL_HOST_USER = get_env_setting(
+    "EMAIL_HOST_USER", REQUIRED_SETTINGS_PLACEHOLDERS["EMAIL_HOST_USER"]
+)  # ← Ton adresse email
+EMAIL_HOST_PASSWORD = get_env_setting(
+    "EMAIL_HOST_PASSWORD",
+    REQUIRED_SETTINGS_PLACEHOLDERS["EMAIL_HOST_PASSWORD"],
 )  # ← Mot de passe d'application sécurisé
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -182,8 +216,14 @@ SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("SOCIAL_AUTH_FACEBOOK_KEY")
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("SOCIAL_AUTH_FACEBOOK_SECRET")
 SOCIAL_AUTH_TWITCH_KEY = os.environ.get("SOCIAL_AUTH_TWITCH_KEY")
 SOCIAL_AUTH_TWITCH_SECRET = os.environ.get("SOCIAL_AUTH_TWITCH_SECRET")
-RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUBLIC_KEY")
-RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_PRIVATE_KEY")
+RECAPTCHA_PUBLIC_KEY = get_env_setting(
+    "RECAPTCHA_PUBLIC_KEY",
+    REQUIRED_SETTINGS_PLACEHOLDERS["RECAPTCHA_PUBLIC_KEY"],
+)
+RECAPTCHA_PRIVATE_KEY = get_env_setting(
+    "RECAPTCHA_PRIVATE_KEY",
+    REQUIRED_SETTINGS_PLACEHOLDERS["RECAPTCHA_PRIVATE_KEY"],
+)
 
 
 from . import checks  # noqa: F401,E402
