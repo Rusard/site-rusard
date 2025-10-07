@@ -18,7 +18,9 @@ Développer un site vitrine professionnel avec des fonctionnalités comme :
 * **Backend** : [Django](https://www.djangoproject.com/)
 * **Base de données** : PostgreSQL
 * **Serveur web** : Gunicorn + Nginx
+
 * **Reverse Proxy** : nginx-proxy + docker-gen + acme-companion (Let's Encrypt) avec un volume partagé `/etc/nginx/conf.d`
+
 * **Conteneurs** : Docker + Docker Compose
 * **CI/CD** : GitHub Actions
 * **Environnement Dev/Prod** : géré via `.env` + `Dockerfile` multi-stage
