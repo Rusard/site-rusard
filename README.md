@@ -91,6 +91,18 @@ Le déploiement :
 * Collecte les fichiers statiques
 * Applique les éventuelles migrations
 
+### 🌍 Variables d'environnement clés (production)
+
+Pour éviter les boucles de redirection et servir le domaine canonique, assure-toi que le fichier `.env.prod` contient :
+
+```env
+DJANGO_ALLOWED_HOSTS=rusard.ch,www.rusard.ch
+CSRF_TRUSTED_ORIGINS=https://rusard.ch https://www.rusard.ch
+DJANGO_SECURE_SSL_REDIRECT=1
+```
+
+Les valeurs peuvent être séparées par des virgules ou des espaces : le helper `parse_env_list` se charge de les normaliser.
+
 ## 📩 Contact
 
 Pour toute question ou suggestion :
