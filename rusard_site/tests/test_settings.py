@@ -25,7 +25,6 @@ def test_build_default_database_url_uses_expected_defaults(monkeypatch):
     ]:
         monkeypatch.delenv(key, raising=False)
 
-    assert (
-        settings.build_default_database_url()
-        == "postgres://postgres:postgres@localhost:5432/postgres"
-    )
+    expected_url = "postgres://postgres:postgres@localhost:5432/postgres"
+
+    assert settings.build_default_database_url() == expected_url

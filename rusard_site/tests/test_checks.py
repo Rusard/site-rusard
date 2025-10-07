@@ -14,11 +14,15 @@ def test_required_settings_check_warns_when_using_placeholders(monkeypatch):
 
     messages = checks.required_settings_check(None)
 
-    assert not any(isinstance(message, django_checks.Critical) for message in messages)
+    has_critical_messages = any(
+        isinstance(message, django_checks.Critical) for message in messages
+    )
+    assert not has_critical_messages
 
-    warning_ids = {
-        message.id for message in messages if isinstance(message, django_checks.Warning)
-    }
+    def is_warning(message):
+        return isinstance(message, django_checks.Warning)
+
+    warning_ids = {message.id for message in messages if is_warning(message)}
 
     assert {
         "rusard.E001.placeholder",
