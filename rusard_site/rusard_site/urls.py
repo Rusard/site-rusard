@@ -20,8 +20,8 @@ import ts.views as ts_views
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
-from django.urls import include, path
-from django.views.generic import TemplateView
+from django.urls import include, path, re_path
+from django.views.generic import RedirectView, TemplateView
 from rusardhome.sitemaps import ArticleSitemap, StaticViewSitemap
 
 sitemaps = {
@@ -32,19 +32,19 @@ sitemaps = {
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.accueil, name="accueil"),
-    path("Accueil/", views.accueil, name="accueil"),
-    path("Modélisation/", views.modelisation, name="modelisation"),
-    path("Blog/", views.blog_list, name="blog_list"),
-    path("Blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
-    path("Blog/<slug:slug>/like/", views.blog_toggle_like, name="blog_toggle_like"),
-    path("About/", views.about, name="about"),
-    path("ProjetAPP/", views.projetapp, name="projetapp"),
-    path("Contact/", views.contact, name="contact"),
+    path("accueil/", views.accueil, name="accueil"),
+    path("modelisation/", views.modelisation, name="modelisation"),
+    path("blog/", views.blog_list, name="blog_list"),
+    path("blog/<slug:slug>/", views.blog_detail, name="blog_detail"),
+    path("blog/<slug:slug>/like/", views.blog_toggle_like, name="blog_toggle_like"),
+    path("about/", views.about, name="about"),
+    path("projetapp/", views.projetapp, name="projetapp"),
+    path("contact/", views.contact, name="contact"),
     path("ts-tpf/", ts_views.tours_services, name="ts"),
-    path("Contact/Confirmation/", views.contactconfirme, name="contactconfirme"),
-    path("Mentions_legales/", views.mentions_legales, name="mentions_legales"),
+    path("contact/confirmation/", views.contactconfirme, name="contactconfirme"),
+    path("mentions-legales/", views.mentions_legales, name="mentions_legales"),
     path(
-        "Politique_de_confidentialite/",
+        "politique-de-confidentialite/",
         views.politique_confidentialite,
         name="politique_confidentialite",
     ),
@@ -64,3 +64,27 @@ urlpatterns = [
     path("accounts/logout/", auth_views.LogoutView.as_view(), name="logout"),
     path("accounts/signup/", views.signup, name="signup"),
 ]
+
+
+legacy_uppercase_patterns = [
+    (r"^Accueil/$", "accueil"),
+    (r"^Mod[ée]lisation/$", "modelisation"),
+    (r"^Blog/$", "blog_list"),
+    (r"^Blog/(?P<slug>[^/]+)/$", "blog_detail"),
+    (r"^Blog/(?P<slug>[^/]+)/like/$", "blog_toggle_like"),
+    (r"^About/$", "about"),
+    (r"^ProjetAPP/$", "projetapp"),
+    (r"^Contact/$", "contact"),
+    (r"^Contact/Confirmation/$", "contactconfirme"),
+    (r"^Mentions_legales/$", "mentions_legales"),
+    (r"^Politique_de_confidentialite/$", "politique_confidentialite"),
+]
+
+
+for pattern, target_name in legacy_uppercase_patterns:
+    urlpatterns.append(
+        re_path(
+            pattern,
+            RedirectView.as_view(pattern_name=target_name, permanent=True),
+        )
+    )
