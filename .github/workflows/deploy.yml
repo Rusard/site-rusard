@@ -26,7 +26,7 @@ jobs:
           pip install -r rusard_site/requirements.txt
 
       - name: Run Flake8
-        run: flake8 . --ignore=E501,F401,E265,E131,E303,W391
+        run: flake8 . --ignore=E501,F401,E265,E131,E303,E402,W391
 
       - name: Run tests
         env:

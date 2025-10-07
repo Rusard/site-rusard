@@ -39,6 +39,13 @@ def parse_env_list(variable_name: str) -> list[str]:
     return [item for item in parts if item]
 
 
+def get_env_flag(variable_name: str, default: bool) -> bool:
+    raw_value = os.environ.get(variable_name)
+    if raw_value is None:
+        return default
+    return raw_value.strip().lower() in {"1", "true", "yes", "on"}
+
+
 ALLOWED_HOSTS = parse_env_list("DJANGO_ALLOWED_HOSTS")
 
 
@@ -185,6 +192,8 @@ STATIC_ROOT = os.path.join(
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+USE_X_FORWARDED_HOST = True
+SECURE_SSL_REDIRECT = get_env_flag("DJANGO_SECURE_SSL_REDIRECT", default=not DEBUG)
 
 CSRF_TRUSTED_ORIGINS = parse_env_list("CSRF_TRUSTED_ORIGINS")
 
