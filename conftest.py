@@ -18,8 +18,7 @@ from django.conf import settings as django_settings
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client
-from django.test.utils import (_TestState, setup_test_environment,
-                               teardown_test_environment)
+from django.test.utils import setup_test_environment, teardown_test_environment
 
 if not apps.ready:
     django.setup()
@@ -29,14 +28,10 @@ if not apps.ready:
 def django_db_setup():
     """Initialise the Django test environment and database once per test run."""
 
-    needs_teardown = False
-    if not hasattr(_TestState, "saved_data"):
-        setup_test_environment()
-        needs_teardown = True
+    setup_test_environment()
     call_command("migrate", run_syncdb=True, verbosity=0)
     yield
-    if needs_teardown and hasattr(_TestState, "saved_data"):
-        teardown_test_environment()
+    teardown_test_environment()
 
 
 @pytest.fixture
