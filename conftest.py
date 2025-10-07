@@ -18,8 +18,7 @@ from django.conf import settings as django_settings
 from django.contrib.auth import get_user_model
 from django.core.management import call_command
 from django.test import Client
-from django.test.utils import (_TestState, setup_test_environment,
-                               teardown_test_environment)
+from django.test.utils import setup_test_environment, teardown_test_environment
 
 if not apps.ready:
     django.setup()
@@ -29,22 +28,10 @@ if not apps.ready:
 def django_db_setup():
     """Initialise the Django test environment and database once per test run."""
 
-    needs_teardown = False
-    if not hasattr(_TestState, "saved_data"):
-        try:
-            setup_test_environment()
-        except RuntimeError as exc:
-            # pytest-django or another bootstrapper may have already initialised
-            # the Django test environment. Re-raising would crash the suite even
-            # though the environment is ready, so treat this as a no-op.
-            if "already called" not in str(exc):
-                raise
-        else:
-            needs_teardown = True
+    setup_test_environment()
     call_command("migrate", run_syncdb=True, verbosity=0)
     yield
-    if needs_teardown and hasattr(_TestState, "saved_data"):
-        teardown_test_environment()
+    teardown_test_environment()
 
 
 @pytest.fixture
