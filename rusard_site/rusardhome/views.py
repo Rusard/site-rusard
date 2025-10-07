@@ -52,7 +52,9 @@ def blog_detail(request, slug):
         Article.objects.prefetch_related(
             Prefetch(
                 "comments",
-                queryset=Comment.objects.filter(is_approved=True).select_related("user"),
+                queryset=Comment.objects.filter(is_approved=True).select_related(
+                    "user"
+                ),
             ),
             "likes",
         ),
@@ -63,9 +65,7 @@ def blog_detail(request, slug):
     user_display_name = ""
     user_email = ""
     if request.user.is_authenticated:
-        user_display_name = (
-            request.user.get_full_name() or request.user.get_username()
-        )
+        user_display_name = request.user.get_full_name() or request.user.get_username()
         user_email = request.user.email
 
     if request.method == "POST" and "comment_submit" in request.POST:

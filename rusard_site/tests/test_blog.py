@@ -1,6 +1,5 @@
 import pytest
 from django.urls import reverse
-
 from rusardhome.models import Article, ArticleLike, Comment
 
 
@@ -31,7 +30,9 @@ def test_blog_detail_allows_comment_submission(client):
 
     assert response.status_code == 302
     assert response["Location"].endswith("#comments")
-    assert Comment.objects.filter(article=article, body__icontains="Super article").exists()
+    assert Comment.objects.filter(
+        article=article, body__icontains="Super article"
+    ).exists()
 
 
 @pytest.mark.django_db
