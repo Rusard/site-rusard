@@ -1,0 +1,1 @@
+Added docker-gen sidecar to the production stack so nginx-proxy rebuilds virtual hosts, wired acme-companion to the new container, and documented the change.

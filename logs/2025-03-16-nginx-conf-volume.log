@@ -1,0 +1,4 @@
+2025-03-16 — Stabilise la génération de conf nginx pour Let's Encrypt
+- Ajout d'un volume nommé `nginx_conf` partagé entre `nginx-proxy` et `docker-gen`
+- Montage explicite des volumes requis dans le conteneur `docker-gen`
+- Synchronisation de la doc pour rappeler la contrainte de volume partagé
