@@ -47,6 +47,23 @@ services:
     depends_on:
       - web
 
+  docker-gen:
+    image: nginxproxy/docker-gen
+    container_name: docker-gen
+    restart: always
+    command: >-
+      -notify-sighup nginx-proxy
+      -watch
+      -wait 5s:30s
+      /etc/docker-gen/templates/nginx.tmpl
+      /etc/nginx/conf.d/default.conf
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    volumes_from:
+      - nginx-proxy
+    depends_on:
+      - nginx-proxy
+
   acme-companion:
     image: nginxproxy/acme-companion
     env_file:
@@ -58,7 +75,7 @@ services:
       - vhost:/etc/nginx/vhost.d
       - acme:/etc/acme.sh
     depends_on:
-      - nginx-proxy
+      - docker-gen
 
 volumes:
   postgres_data:
