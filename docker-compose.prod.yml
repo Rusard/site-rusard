@@ -1,5 +1,8 @@
+version: "3.9"
+
 services:
   web:
+    container_name: web
     build:
       context: ./rusard_site
       dockerfile: Dockerfile.prod
@@ -20,6 +23,7 @@ services:
       - db
 
   db:
+    container_name: db
     image: postgres:15
     volumes:
       - postgres_data:/var/lib/postgresql/data/
@@ -50,9 +54,8 @@ services:
     image: nginxproxy/acme-companion
     container_name: acme-companion
     restart: always
-    environment:
-      - NGINX_PROXY_CONTAINER=nginx-proxy
-      - DEFAULT_EMAIL=contact@rusard.ch
+    env_file:
+      - ./.env.prod.proxy-companion
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - certs:/etc/nginx/certs
