@@ -143,10 +143,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = "/static/"
-# Indiquer où les fichiers statiques seront collectés (cela doit être dans un répertoire accessible par Nginx)
-STATIC_ROOT = os.path.join(
-    BASE_DIR, "staticfiles"
-)  # Exemple : /home/app/web/staticfiles
+#FIX align static collection with Docker volume mount
+STATIC_ROOT = "/home/app/web/staticfiles"
+
+MEDIA_URL = "/media/"
+#FIX expose media files through shared volume
+MEDIA_ROOT = "/home/app/web/mediafiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-auto-field

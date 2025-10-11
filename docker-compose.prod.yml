@@ -45,7 +45,8 @@ services:
       - media_volume:/home/app/web/mediafiles
       - certs:/etc/nginx/certs
       - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
+      - ./nginx/vhost.d:/etc/nginx/vhost.d  #FIX use project vhost overrides
+      - ./nginx/custom.conf:/etc/nginx/conf.d/custom.conf:ro  #FIX ensure proxy size limit applied
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - web
@@ -60,7 +61,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - certs:/etc/nginx/certs
       - html:/usr/share/nginx/html
-      - vhost:/etc/nginx/vhost.d
+      - ./nginx/vhost.d:/etc/nginx/vhost.d  #FIX share same vhost overrides
       - acme:/etc/acme.sh
     depends_on:
       - nginx-proxy
@@ -71,5 +72,4 @@ volumes:
   media_volume:
   certs:
   html:
-  vhost:
   acme:
